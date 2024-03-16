@@ -1,0 +1,16 @@
+.adv {
+  display: flex;
+  flex-direction: column;
+  img {
+    height: 240px;
+    width: auto;
+    object-fit: contain;
+    cursor: pointer;
+  }
+
+  p {
+    text-align: center;
+    margin: 0;
+    font-size: 10px
+  }
+}

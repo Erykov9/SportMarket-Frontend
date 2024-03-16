@@ -1,0 +1,12 @@
+@import 'src/styles/config.scss';
+
+.products {
+  margin-top: 25px;
+  .productsCategory {
+    text-align: center;
+  }
+
+  span {
+    color: $error;
+  }
+}
