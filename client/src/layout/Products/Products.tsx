@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Pagination } from "@mui/material";
 import styles from "./Products.module.scss";
 import ProductsStore from "../../mobx/ProductsStore";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
@@ -7,7 +7,15 @@ import { observer } from "mobx-react";
 import Advertisement from "../../components/Advertisement/Advertisement";
 
 const Products = observer(() => {
-  const { products, isError, query } = ProductsStore;
+  const { products, isError, query, pagination } = ProductsStore;
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number): void => {
+    const newQuery = {
+      ...query,
+      pageNumber: value,
+    };
+
+    ProductsStore.setQuery(newQuery);
+  };
 
   if(isError) {
     return <LoadingComponent />;
@@ -19,10 +27,13 @@ const Products = observer(() => {
         <h2 className={styles.productsCategory}>{query.filterCategory}</h2>
         {products?.length !== 0 ? products?.map((product: Product, index: number) => (
           <>
-            {(index + 1) % 4 === 0 && <Advertisement/>}
-            <Product product={product} />
+            {(index + 1) % 4 === 0 && <Advertisement key={index}/>}
+            <Product product={product} key={`${index} product`}/>
           </>
         )) : <h2>No results for key <span>"{query.filterQuery}"</span>.</h2>}
+        <div className={styles.pagination}>
+          {products?.length !== 0 && <Pagination count={pagination.totalPages} page={pagination.pageNumber} onChange={handleChange}/>}
+        </div>
       </div>
     </Container>
   );

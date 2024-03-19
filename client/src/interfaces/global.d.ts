@@ -5,6 +5,9 @@ interface Product {
   productPrice: number;
   user: User;
   category: Category;
+  location: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 interface User {
@@ -15,4 +18,11 @@ interface User {
 
 interface Category {
   categoryName: string;
+}
+
+interface Pagination {
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number
 }

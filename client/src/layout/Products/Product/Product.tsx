@@ -1,5 +1,6 @@
 import { Divider } from "@mui/material";
 import styles from "./Product.module.scss";
+import moment from "moment";
 
 interface IProductProps {
   product: Product;
@@ -16,7 +17,9 @@ const Product: React.FC<IProductProps> = ({product}) => {
           <div className={styles.productHeader}>
             <h3>{product.productName}</h3>
             <p>{product.productDescription}</p>
-            <p>Category: <span>{product.category.categoryName}</span></p>
+            <p className={styles.productInfo}>Category: <span>{product.category.categoryName}</span></p>
+            <p className={styles.productInfo}>Location: <span>{product.location}</span></p>
+            <p className={styles.productInfo}>Added: <span>{moment(product.createdAt).format("YYYY/MM/DD")}</span></p>
           </div>
           <Divider/>
           <div className={styles.productFooter}>

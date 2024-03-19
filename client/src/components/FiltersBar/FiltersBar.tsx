@@ -6,14 +6,15 @@ import ProductsStore from "../../mobx/ProductsStore";
 import { useState } from "react";
 
 const FiltersBar = () => {
+  const { query } = ProductsStore;
   const [searchInputData, setSearchInputData] = useState<string>("");
 
   const handleSearch = (): void => {
-    ProductsStore.setQuery({...ProductsStore.query, filterOn: "productname", filterQuery: searchInputData });
+    ProductsStore.setQuery({...query, filterOn: "productname", filterQuery: searchInputData });
   };
 
   const handleRemove = (): void => {
-    ProductsStore.setQuery({...ProductsStore.query, filterOn: "", filterQuery: "" });
+    ProductsStore.setQuery({...query, filterOn: "", filterQuery: "" });
     setSearchInputData("");
   };
 
