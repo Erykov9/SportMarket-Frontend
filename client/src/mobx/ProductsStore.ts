@@ -1,6 +1,5 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import DataService from "../services/DataService";
-import { toJS } from "mobx";
 
 export interface IProductQuery {
   filterOn: string | null;

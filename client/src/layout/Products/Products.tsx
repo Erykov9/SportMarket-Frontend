@@ -26,10 +26,10 @@ const Products = observer(() => {
       <div className={styles.products}>
         <h2 className={styles.productsCategory}>{query.filterCategory}</h2>
         {products?.length !== 0 ? products?.map((product: Product, index: number) => (
-          <>
-            {(index + 1) % 4 === 0 && <Advertisement key={index}/>}
-            <Product product={product} key={`${index} product`}/>
-          </>
+          <div key={product.id}>
+            {(index + 1) % 4 === 0 && <Advertisement />}
+            <Product product={product} />
+          </div>
         )) : <h2>No results for key <span>"{query.filterQuery}"</span>.</h2>}
         <div className={styles.pagination}>
           {products?.length !== 0 && <Pagination count={pagination.totalPages} page={pagination.pageNumber} onChange={handleChange}/>}
