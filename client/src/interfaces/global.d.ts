@@ -8,6 +8,7 @@ interface Product {
   location: string;
   createdAt: Date;
   updatedAt?: Date;
+  images: Image[]
 }
 
 interface User {
@@ -25,4 +26,16 @@ interface Pagination {
   pageNumber: number;
   pageSize: number;
   totalPages: number
+}
+
+interface Image {
+  id: string;
+  file: null;
+  fileName: string;
+  fileDescription: string;
+  fileExtension: string;
+  fileSizeInBytes: number;
+  filePath: string;
+  fileUsername: string;
+  productId: string;
 }

@@ -11,6 +11,15 @@ class DataService {
       throw new Error(`Couldn't get ${endpoint} list. ${error}`);
     }
   }
+
+  async getOne(endpoint: string, id?: string) {
+    try {
+      const response = await axios.get(`${this._baseURL}/${endpoint}/${id}`);
+      return response.data;
+    } catch (error){
+      throw new Error(`Couldn't get ${endpoint} list. ${error}`);
+    }
+  }
 };
 
 export default new DataService();

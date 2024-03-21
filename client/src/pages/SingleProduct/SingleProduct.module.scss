@@ -1,0 +1,64 @@
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
+@import "src/styles/config.scss";
+
+.singleProduct {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 65px;
+  
+  .wrapper {
+    display: flex;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+    }
+
+    .gallery {
+      width: 50%;
+      @media (max-width: 992px) {
+        width: 100%;
+      }
+
+      .image-gallery-image {
+        border-radius: 10px;
+      }
+    }
+
+    .content {
+      margin: 0 25px;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      @media (max-width: 992px) {
+        width: 100%;
+      }
+
+      h4 {
+        .username {
+          color: $error;
+          text-overflow: ellipsis;
+        }
+      }
+
+      h2 {
+        margin: 0;
+      }
+
+      .productPrice {
+        span {
+          color: $error;
+        }
+      }
+      
+
+      .categoryName {
+        margin: 0;
+
+        span {
+          color: $error;
+        }
+      }
+    }
+  }
+}

@@ -9,12 +9,20 @@ import Advertisement from "../../components/Advertisement/Advertisement";
 const Products = observer(() => {
   const { products, isError, query, pagination } = ProductsStore;
   const handleChange = (event: React.ChangeEvent<unknown>, value: number): void => {
+    scrollToTop();
     const newQuery = {
       ...query,
       pageNumber: value,
     };
 
     ProductsStore.setQuery(newQuery);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0, 
+      behavior: 'smooth'
+    });
   };
 
   if(isError) {

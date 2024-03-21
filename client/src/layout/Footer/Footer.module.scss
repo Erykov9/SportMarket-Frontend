@@ -1,0 +1,19 @@
+@import "src/styles/config.scss";
+
+.footer {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+
+  a {
+    margin: 5px;
+    color: $secondary;
+
+    &:hover {
+      opacity: .7;
+    }
+    svg {
+      font-size: 35px;
+    }
+  }
+}

@@ -10,18 +10,20 @@ import {
 } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import { useNavigate } from "react-router-dom";
 
 interface INavigationProps {
   isLogged: boolean;
 }
 
 const Navigation: React.FC<INavigationProps> = ({ isLogged }) => {
+  const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="primary">
+    <Box sx={{ flexGrow: 1, position: 'relative' }}>
+      <AppBar position="fixed" color="secondary">
         <Container>
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
               Sport Market
             </Typography>
             {isLogged ? (
@@ -34,8 +36,8 @@ const Navigation: React.FC<INavigationProps> = ({ isLogged }) => {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Register">
-                  <IconButton color="inherit">
-                    <AppRegistrationIcon />
+                  <IconButton color="inherit" onClick={() => navigate('/register')}>
+                    <AppRegistrationIcon/>
                   </IconButton>
                 </Tooltip>
               </>

@@ -1,4 +1,3 @@
-import Footer from '../../layout/Footer/Footer';
 import Header from '../../layout/Header/Header';
 import Categories from '../../layout/Categories/Categories';
 import styles from "./MainPage.module.scss";
@@ -14,7 +13,6 @@ const MainPage = () => {
       <FiltersBar/>
       <FiltersAccordion/>
       <Products/>
-      <Footer/>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import styles from "./LoadingComponent.module.scss";
 
 const LoadingComponent = () => {
   return (
-    <div className={styles.loadingComponent}><CircularProgress color="warning"/></div>
+    <div className={styles.loadingComponent}><CircularProgress color="error"/></div>
   )
 }
 

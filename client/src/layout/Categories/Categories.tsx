@@ -1,7 +1,7 @@
 import CategoriesStore from "../../mobx/CategoriesStore";
 import ProductsStore from "../../mobx/ProductsStore";
 import styles from "./Categories.module.scss";
-import { Container, Tooltip } from "@mui/material";
+import { Container, Divider, Tooltip } from "@mui/material";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import { observer } from "mobx-react";
 
@@ -38,6 +38,7 @@ const Categories = observer(() => {
           </div>
         )}
       </div>
+      <Divider/>
     </Container>
   );
 });

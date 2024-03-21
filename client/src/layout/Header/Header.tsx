@@ -5,9 +5,9 @@ const Header = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
   return (
-    <div>
+    <header>
       <Navigation isLogged={isLogged}/>
-    </div>
+    </header>
   )
 }
 

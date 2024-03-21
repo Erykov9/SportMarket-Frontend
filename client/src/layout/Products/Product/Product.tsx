@@ -1,16 +1,21 @@
 import { Divider } from "@mui/material";
 import styles from "./Product.module.scss";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 interface IProductProps {
   product: Product;
 }
 
 const Product: React.FC<IProductProps> = ({product}) => {
+  const navigate = useNavigate();
+  const src = product.images.length !== 0 ? product.images[0].filePath : "assets/imageplaceholder.png";
+  const alt = product.images.length !== 0 ? product.images[0].fileName : "placeholder"
+
   return (
-    <div className={styles.product}>
+    <div className={styles.product} onClick={() => navigate(`${product.id}`)}> 
       <div className={styles.image}>
-        <img src="assets/imageplaceholder.png" alt="placeholder"></img>
+        <img src={src} alt={alt}></img>
       </div>
       <div className={styles.body}>
         <div className={styles.description}>

@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  Divider,
 } from "@mui/material";
 import styles from "./FiltersAccordion.module.scss";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -19,6 +20,7 @@ import ProductsStore, { IProductQuery } from "../../mobx/ProductsStore";
 import { useEffect, useState } from "react";
 import cities from "../../vendor/cities.json";
 import { observer } from "mobx-react";
+import { themeStyles } from "../../utils/themeStyles";
 
 const FiltersAccordion = observer(() => {
   const { query } = ProductsStore;
@@ -55,8 +57,9 @@ const FiltersAccordion = observer(() => {
   return (
     <Container>
       <div className={styles.filtersAccordion}>
-        <Accordion>
+        <Accordion sx={{borderRadius: '0', boxShadow: 'none'}}>
           <AccordionSummary
+            sx={{backgroundColor: themeStyles.secondary}}
             expandIcon={
               <Tooltip title="Show/Hide">
                 <ArrowDropDownIcon />
@@ -118,13 +121,15 @@ const FiltersAccordion = observer(() => {
                   <Checkbox
                     checked={filterOptions.isAscending}
                     onChange={handleAscending}
+                    
                   />
                 }
                 label={filterOptions.isAscending ? "Ascending" : "Descending"}
               />
             </Stack>
-            <Button variant="contained" color="primary" onClick={handleSearchByFilter}>Search</Button>
+            <Button variant="contained" color="secondary" onClick={handleSearchByFilter}>Search</Button>
           </AccordionDetails>
+          <Divider />
         </Accordion>
       </div>
     </Container>
