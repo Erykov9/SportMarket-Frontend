@@ -15,29 +15,7 @@
         font-weight: 300;
       }
 
-      .errorMsg {
-        background-color: $error;
-        padding: 5px;
-        border-radius: 5px;
-        p {
-          color: white;
-          text-align: center;
-          margin: 0;
-          font-size: 12px;
-        }
-      }
-
-      .successMsg {
-        background-color: $success;
-        padding: 5px;
-        border-radius: 5px;
-        p {
-          color: white;
-          text-align: center;
-          margin: 0;
-          font-size: 12px;
-        }
-      }
+      
     }
   }
 }

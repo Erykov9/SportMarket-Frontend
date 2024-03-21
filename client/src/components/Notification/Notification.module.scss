@@ -1,0 +1,39 @@
+@import 'src/styles/config.scss';
+
+.notification {
+  .errorMsg {
+    background-color: $error;
+    padding: 5px;
+    border-radius: 5px;
+    p {
+      color: white;
+      text-align: center;
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  .successMsg {
+    background-color: $success;
+    padding: 5px;
+    border-radius: 5px;
+    p {
+      color: white;
+      text-align: center;
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  .infoMsg {
+    background-color: $warning;
+    padding: 5px;
+    border-radius: 5px;
+    p {
+      color: white;
+      text-align: center;
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+}

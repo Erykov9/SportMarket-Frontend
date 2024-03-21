@@ -14,6 +14,8 @@ import { Formik, Form, Field } from "formik";
 import { themeStyles } from "../../../utils/themeStyles";
 import DataService from "../../../services/DataService";
 import { useState } from "react";
+import { NotificationProps } from "../../../components/Notification/Notification";
+import Notification from "../../../components/Notification/Notification";
 
 export interface RegisterForm {
   username: string;
@@ -30,9 +32,11 @@ const Register = () => {
     password: "",
     isTermsAccepted: false,
   };
-
-  const [error, setError] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
+  const initialNotificationValues = {
+    type: null,
+    message: null,
+  }
+  const [notificationInfo, setNotificationInfo] = useState<NotificationProps>(initialNotificationValues);
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string()
@@ -56,16 +60,22 @@ const Register = () => {
   });
 
   const register = async (body: RegisterForm): Promise<void> => {
-    setError(false);
-    setSuccess(false);
+    setNotificationInfo(initialNotificationValues);
     const { isTermsAccepted, ...rest } = body;
     const response = await DataService.register('register', rest);
 
     if(response.error) {
-      return setError(true);
+      return setNotificationInfo({
+        type: 'error',
+        message: 'Register failed.'
+      });
     }
 
-    setSuccess(true);
+    setNotificationInfo({
+      type: 'success',
+      message: 'Register successful. Please log in.'
+    });
+
     setTimeout(() => {
       navigate(-1);
     }, 3000);
@@ -78,11 +88,7 @@ const Register = () => {
       </Button>
       <div className={styles.wrapper}>
         <div className={styles.registerForm}>
-          {error && <div className={styles.errorMsg}>
-            <p>We are sorry!</p>
-            <p>Register failed, please try again later</p>
-          </div>}
-          {success && <div className={styles.successMsg}><p>Register successful!</p><p>You can log in.</p></div>}
+          {notificationInfo.type && <Notification type={notificationInfo.type} message={notificationInfo.message} />}
           <h1>
             Welcome to <span>SportMarket</span>!
           </h1>
