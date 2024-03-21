@@ -1,7 +1,43 @@
 @import 'src/styles/config.scss';
 
 .register {
+  padding: 25px;
+  margin-bottom: 65px;
   .wrapper {
+    display: flex;
+    justify-content: center;
+    .registerForm {
+      display: flex;
+      flex-direction: column;
 
+      h1 {
+        text-align: center;
+        font-weight: 300;
+      }
+
+      .errorMsg {
+        background-color: $error;
+        padding: 5px;
+        border-radius: 5px;
+        p {
+          color: white;
+          text-align: center;
+          margin: 0;
+          font-size: 12px;
+        }
+      }
+
+      .successMsg {
+        background-color: $success;
+        padding: 5px;
+        border-radius: 5px;
+        p {
+          color: white;
+          text-align: center;
+          margin: 0;
+          font-size: 12px;
+        }
+      }
+    }
   }
 }

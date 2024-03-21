@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { RegisterForm } from '../pages/Auth/Register/Register';
 
 class DataService {
   private readonly _baseURL = process.env.REACT_APP_BASE_URL;
@@ -18,6 +19,20 @@ class DataService {
       return response.data;
     } catch (error){
       throw new Error(`Couldn't get ${endpoint} list. ${error}`);
+    }
+  }
+
+  async register(endpoint: string, body: RegisterForm) {
+    try {
+      const bodyToRegister = {
+        ...body,
+        roles: ["User"]
+      };
+
+      const response = await axios.post(`${this._baseURL}/auth/${endpoint}`, bodyToRegister);
+      return response.data;
+    } catch (error) {
+      return {error: "Register failed. " + error}
     }
   }
 };
