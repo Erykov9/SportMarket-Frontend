@@ -12,12 +12,12 @@ const Notification: React.FC<NotificationProps> = ({type, message}) => {
     <p>{message}</p>
   </div>;
 
-  const success = <div className={styles.errorMsg}>
+  const success = <div className={styles.successMsg}>
     <p>Success!</p>
     <p>{message}</p>
   </div>;
 
-  const info = <div className={styles.errorMsg}>
+  const info = <div className={styles.infoMsg}>
     <p>Notification</p>
     <p>{message}</p>
   </div>;

@@ -7,10 +7,13 @@ import {
   Container,
   Avatar,
   Tooltip,
+  Button,
 } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
+import AuthStore from "../../../mobx/AuthStore";
 
 interface INavigationProps {
   isLogged: boolean;
@@ -18,6 +21,10 @@ interface INavigationProps {
 
 const Navigation: React.FC<INavigationProps> = ({ isLogged }) => {
   const navigate = useNavigate();
+  const logoutHandler = async () => {
+    await AuthStore.logout();
+  };
+
   return (
     <Box sx={{ flexGrow: 1, position: 'relative' }}>
       <AppBar position="fixed" color="secondary">
@@ -27,11 +34,14 @@ const Navigation: React.FC<INavigationProps> = ({ isLogged }) => {
               Sport Market
             </Typography>
             {isLogged ? (
+              <>
               <Avatar>E</Avatar>
+              <Button color="warning" onClick={logoutHandler}><LogoutIcon/></Button>
+              </>
             ) : (
               <>
                 <Tooltip title="Login">
-                  <IconButton color="inherit">
+                  <IconButton color="inherit" onClick={() => navigate('/login')}>
                     <LoginIcon />
                   </IconButton>
                 </Tooltip>

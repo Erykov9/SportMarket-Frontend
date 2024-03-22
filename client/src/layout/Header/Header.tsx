@@ -1,9 +1,10 @@
 import Navigation from "./Navigation/Navigation";
-import { useState } from "react";
 
-const Header = () => {
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+interface IHeaderProps {
+  isLogged: boolean;
+}
 
+const Header: React.FC<IHeaderProps> = ({isLogged}) => {
   return (
     <header>
       <Navigation isLogged={isLogged}/>

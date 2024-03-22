@@ -5,10 +5,14 @@ import FiltersBar from '../../components/Filters/FiltersBar';
 import Products from '../../layout/Products/Products';
 import FiltersAccordion from '../../components/Filters/FiltersAccordion';
 
-const MainPage = () => {
+interface IMainPageProps {
+  isLogged: boolean;
+}
+
+const MainPage: React.FC<IMainPageProps> = ({isLogged}) => {
   return (
     <div className={styles.mainpage}>
-      <Header/>
+      <Header isLogged={isLogged}/>
       <Categories/>
       <FiltersBar/>
       <FiltersAccordion/>
