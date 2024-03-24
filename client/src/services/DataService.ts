@@ -16,10 +16,36 @@ class DataService {
 
   async getOne(endpoint: string, id?: string) {
     try {
-      const response = await axios.get(`${this._baseURL}/${endpoint}/${id}`);
+      const response = await axios.get(`${this._baseURL}/${endpoint}/${id}`, {withCredentials: true});
       return response.data;
     } catch (error){
       throw new Error(`Couldn't get ${endpoint} list. ${error}`);
+    }
+  }
+
+  async update(endpoint: string, id: string, body: any) {
+    try {
+      const response = await axios.put(`${this._baseURL}/${endpoint}/${id}`, body, {withCredentials: true});
+      return response.data;
+    } catch (error) {
+      throw new Error(`Couldn't update ${endpoint}. ${error}`)
+    }
+  }
+
+  async create(endpoint: string, body: any) {
+    try {
+      const response = await axios.post(`${this._baseURL}/${endpoint}`, body, {withCredentials: true});
+      return response;
+    } catch(error) {
+      throw new Error(`Couldn't create new ${endpoint}. ${error}`)
+    }
+  }
+
+  async delete(endpoint: string, id: string) {
+    try {
+      await axios.delete(`${this._baseURL}/${endpoint}/${id}`, {withCredentials: true})
+    } catch(error) {
+      throw new Error(`Couldn't delete ${endpoint}. ${error}`)
     }
   }
 

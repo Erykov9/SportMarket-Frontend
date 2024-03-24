@@ -77,13 +77,13 @@ const Register = () => {
     });
 
     setTimeout(() => {
-      navigate(-1);
+      navigate("/");
     }, 3000);
   }
 
   return (
     <div className={styles.register}>
-      <Button onClick={() => navigate(-1)}>
+      <Button onClick={() => navigate("/")}>
         <ArrowBackIcon />
       </Button>
       <div className={styles.wrapper}>

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeAutoObservable } from "mobx";
 import DataService from "../services/DataService";
 
 class SingleProductStore {
@@ -9,6 +9,7 @@ class SingleProductStore {
     makeAutoObservable(this);
   };
 
+  @action
   setProduct(product: Product): void {
     this.product = product;
   };
@@ -22,6 +23,20 @@ class SingleProductStore {
       this.isError = true;
     }
   };
+
+  async update(id: string, body: any) {
+    await DataService.update("products", id, body);
+  }
+
+  async create(body: any) {
+    await DataService.create("products", body);
+  }
+
+  async delete(id: string) {
+    await DataService.delete("products", id);
+  }
+
+
 };
 
 export default new SingleProductStore();

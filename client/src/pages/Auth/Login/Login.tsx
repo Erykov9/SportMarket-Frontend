@@ -43,13 +43,13 @@ const Login = () => {
     })
     
     setTimeout(() => {
-      navigate(-1);
+      navigate("/");
     }, 1500)
   };
 
   return (
     <div className={styles.login}>
-      <Button onClick={() => navigate(-1)}>
+      <Button onClick={() => navigate("/")}>
         <ArrowBackIcon />
       </Button>
       <div className={styles.wrapper}>

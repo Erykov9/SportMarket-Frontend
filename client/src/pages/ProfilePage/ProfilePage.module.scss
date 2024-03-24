@@ -1,0 +1,54 @@
+@import 'src/styles/config.scss';
+
+.profile {
+  .wrapper {
+    padding: 25px;
+
+    h3 {
+      font-weight: 300;
+      text-align: center;
+      margin: 45px 0;
+    }
+
+    .header {
+      h2 {
+        font-weight: 300;
+        text-align: center;
+
+        span {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .menu {
+      display: flex;
+      justify-content: center;
+    }
+
+    .productsPanel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .newProduct {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        h2 {
+          font-weight: 400;
+          text-align: center;
+        }
+      }
+
+      .product {
+        padding: 10px;
+        h2 {
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}

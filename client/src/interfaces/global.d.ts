@@ -18,6 +18,7 @@ interface User {
 }
 
 interface Category {
+  id: string;
   categoryName: string;
 }
 

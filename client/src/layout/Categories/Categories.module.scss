@@ -17,10 +17,9 @@
     justify-content: center;
 
     .paper {
-      border-radius: 5px;
       box-shadow: 0px 4px 7px 0px black;
-      margin: 5px;
-      width: 130px;
+      margin: 10px;
+      width: 180px;
       height: 130px;
       display: flex; 
       justify-content: center;
@@ -36,6 +35,7 @@
 
       &:hover {
         filter: grayscale(0);
+        transform: scale(1.1);
       }
     }
 

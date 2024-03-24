@@ -10,15 +10,11 @@ import { themeStyles } from "./utils/themeStyles";
 import Register from "./pages/Auth/Register/Register";
 import Login from "./pages/Auth/Login/Login";
 import AuthStore from "./mobx/AuthStore";
-import { useEffect } from "react";
 import { observer } from "mobx-react";
+import Profile from "./pages/ProfilePage/Profile";
 
 const App = observer(() => {
   const { isUserLogged: isLogged } = AuthStore;
-  
-  useEffect(() => {
-    AuthStore.isLogged();
-  }, []);
 
   return (
     <div className="App">
@@ -36,6 +32,7 @@ const App = observer(() => {
         />
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/profile" element={<Profile/>} />
       </Routes>
       <Divider>SportMarket 2024 &copy; <a href="https://linkedin.com/in/eryk-szczepanek" target="_blank" rel="noreferrer" style={{color: themeStyles.secondary}}>Erykov9</a></Divider>
       <Footer/>
