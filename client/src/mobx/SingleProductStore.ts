@@ -25,18 +25,28 @@ class SingleProductStore {
   };
 
   async update(id: string, body: any) {
-    await DataService.update("products", id, body);
+    const response = await DataService.update("products", id, body);
+    return response;
   }
 
   async create(body: any) {
-    await DataService.create("products", body);
+    const response = await DataService.create("products", body);
+    return response;
+  }
+
+  async uploadImage(body: any) {
+    const response = await DataService.create("images/upload", body);
+    return response;
+  }
+
+  async deleteImage(id: string) {
+    const response = await DataService.delete("images/delete", id);
+    return response;
   }
 
   async delete(id: string) {
     await DataService.delete("products", id);
   }
-
-
 };
 
 export default new SingleProductStore();

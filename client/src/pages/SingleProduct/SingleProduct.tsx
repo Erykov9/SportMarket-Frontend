@@ -1,9 +1,8 @@
 import styles from "./SingleProduct.module.scss";
 import { useParams } from "react-router-dom";
 import SingleProductStore from "../../mobx/SingleProductStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toJS } from "mobx";
 import { observer } from "mobx-react";
 
 import ImageGallery from "react-image-gallery";
@@ -33,10 +32,6 @@ const SingleProduct = observer(() => {
   }
 
   const images = product?.images.length !== 0 ? product?.images.map(image => ({original: image.filePath, thumbnail: image.filePath})) : [{original: "assets/imageplaceholder.png"}];
-  console.log(toJS(product.images).map(image => ({
-    original: image.filePath,
-    thumbnail: image.filePath
-  })));
 
   return (
     <Container>

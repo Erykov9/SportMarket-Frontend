@@ -7,8 +7,11 @@ import { observer } from "mobx-react";
 import styles from "./ManageProduct.module.scss";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
-import { TextField, Button, MenuItem, Stack } from "@mui/material";
+import { TextField, Button, MenuItem, Stack, Divider } from "@mui/material";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
+import ImageUploading, { ImageListType } from "react-images-uploading";
+import { useState } from "react";
+import ManageProductGallery from "./ManagrProductGallery/ManageProductGallery";
 
 interface IManageProductProps {
   id?: string;
@@ -29,9 +32,11 @@ const ManageProduct: React.FC<IManageProductProps> = observer(
   ({ id, isEdit, handleOpen, refetch }) => {
     const { product } = SingleProductStore;
     const { categories } = CategoriesStore;
+    const [imagesUploaded, setImagesUploaded] = useState<ImageListType>([]);
+    const maxNumber: number = 10;
 
     useEffect(() => {
-      if(isEdit) {
+      if (isEdit) {
         SingleProductStore.fetch(id);
       }
     }, []);
@@ -44,36 +49,84 @@ const ManageProduct: React.FC<IManageProductProps> = observer(
       category: categories[0],
     };
 
+    const handleImages = (
+      imageList: ImageListType,
+    ): void => {
+      setImagesUploaded(imageList as never[]);
+    };
+
     const handleCreateProduct = async (data: ProductDTO) => {
       const { category, ...restData } = data;
       const dataToPost = {
         ...restData,
         categoryId: category.id,
         createdAt: new Date(),
+      };
+
+      const response = await SingleProductStore.create(dataToPost);
+
+      if (imagesUploaded.length !== 0) {
+        const productId: string = response.data.id;
+
+        await Promise.all(
+          imagesUploaded.map(async (image) => {
+            const file = image.file;
+            const data = new FormData();
+            data.append("file", file as Blob);
+            data.append("productId", productId);
+
+            const response = await SingleProductStore.uploadImage(data);
+            return response;
+          })
+        );
       }
 
-      await SingleProductStore.create(dataToPost);
       await ProductsStore.refetch();
       refetch();
       handleOpen();
     };
 
-    const handleUpdateProduct = async (data: Product ) => {
+    const handleUpdateProduct = async (data: Product) => {
       const { category, images, user, id, ...restData } = data;
 
       const dataToPost = {
         ...restData,
         categoryId: category.id,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
 
-      await SingleProductStore.update(id, dataToPost);
+      const response = await SingleProductStore.update(id, dataToPost);
+
+      if (imagesUploaded.length !== 0) {
+        const productId: string = response.id;
+
+        await Promise.all(
+          imagesUploaded.map(async (image) => {
+            const file = image.file;
+            const data = new FormData();
+            data.append("file", file as Blob);
+            data.append("productId", productId);
+
+            const response = await SingleProductStore.uploadImage(data);
+            return response;
+          })
+        );
+      }
+
       await ProductsStore.refetch();
       refetch();
       handleOpen();
     };
 
     const handleDeleteProduct = async (id?: string) => {
+
+      if(product?.images.length !== 0 && product) {
+        await Promise.all(
+          product?.images.map(async (image) => {
+            return await SingleProductStore.deleteImage(image.id);
+          })
+        );
+      }
       await SingleProductStore.delete(id as string);
       await ProductsStore.refetch();
       refetch();
@@ -105,13 +158,14 @@ const ManageProduct: React.FC<IManageProductProps> = observer(
 
     return (
       <div className={styles.manageProduct}>
-        {isEdit ? "Edit product" : "Add new product"}
         <Formik
-          initialValues={isEdit ? product as Product : initialValues as ProductDTO}
+          initialValues={
+            isEdit ? (product as Product) : (initialValues as ProductDTO)
+          }
           validationSchema={validationSchema}
           enableReinitialize
           onSubmit={(values, { setSubmitting }) => {
-            if(isEdit) {
+            if (isEdit) {
               handleUpdateProduct(values as Product);
             } else {
               handleCreateProduct(values as ProductDTO);
@@ -190,7 +244,71 @@ const ManageProduct: React.FC<IManageProductProps> = observer(
                 fullWidth
                 margin="normal"
               />
-              <Stack gap={1}>
+              <Divider sx={{ margin: "10px 0" }}>Images</Divider>
+              {isEdit && (
+                <ManageProductGallery
+                  images={product?.images}
+                  refetch={refetch}
+                  productId={product?.id || ""}
+                />
+              )}
+              <Divider sx={{ margin: "10px 0" }}>Add images</Divider>
+              <ImageUploading
+                multiple
+                value={imagesUploaded}
+                onChange={handleImages}
+                maxNumber={maxNumber}
+              >
+                {({
+                  imageList,
+                  onImageUpload,
+                  onImageRemoveAll,
+                  onImageUpdate,
+                  onImageRemove,
+                  isDragging,
+                  dragProps,
+                }) => (
+                  // write your building UI
+                  <Stack gap={1} sx={{ marginBottom: "10px" }}>
+                    <Button
+                      style={isDragging ? { color: "red" } : undefined}
+                      variant="contained"
+                      onClick={onImageUpload}
+                      {...dragProps}
+                    >
+                      Click or Drop here
+                    </Button>
+                    <Button
+                      onClick={onImageRemoveAll}
+                      variant="contained"
+                      color="warning"
+                    >
+                      Remove all images
+                    </Button>
+                    <Stack flexDirection={"row"} flexWrap={"wrap"}>
+                      {imageList.map((image, index) => (
+                        <Stack
+                          justifyContent={"center"}
+                          key={image.dataURL}
+                          alignItems={"center"}
+                        >
+                          <img src={image.dataURL} alt="" width="100" />
+                          <div className="image-item__btn-wrapper">
+                            <Button onClick={() => onImageUpdate(index)}>
+                              Update
+                            </Button>
+                            <Button onClick={() => onImageRemove(index)}>
+                              Remove
+                            </Button>
+                          </div>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </Stack>
+                )}
+              </ImageUploading>
+              <Divider>Action</Divider>
+              <Stack gap={1} sx={{ marginTop: "10px" }}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -199,16 +317,17 @@ const ManageProduct: React.FC<IManageProductProps> = observer(
                 >
                   Submit
                 </Button>
-                {isEdit && <Button
-                  variant="contained"
-                  color="error"
-                  disabled={isSubmitting}
-                  onClick={() => handleDeleteProduct(product?.id)}
-                >
-                  Usuń
-                </Button>}
+                {isEdit && (
+                  <Button
+                    variant="contained"
+                    color="error"
+                    disabled={isSubmitting}
+                    onClick={() => handleDeleteProduct(product?.id)}
+                  >
+                    Usuń
+                  </Button>
+                )}
               </Stack>
-
             </Form>
           )}
         </Formik>

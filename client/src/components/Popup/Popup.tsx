@@ -12,7 +12,9 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  maxWidth: 600,
+  maxHeight: 700,
+  overflowY: 'auto',
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
@@ -20,7 +22,7 @@ const style = {
 
 const Popup: React.FC<IPopupProps> = ({ isOpen, handleClose, title, children }) => {
   return (
-    <Modal open={isOpen} onClose={handleClose}>
+    <Modal open={isOpen} onClose={handleClose} >
       <Box sx={style}>
         <Typography id="modal" variant="h4" component="h2">
           {title}
