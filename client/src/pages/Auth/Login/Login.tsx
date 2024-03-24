@@ -4,7 +4,7 @@ import { Box, Button, TextField } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Field, Form, Formik } from "formik";
 import { NotificationProps } from "../../../components/Notification/Notification";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notification from "../../../components/Notification/Notification";
 import AuthStore from "../../../mobx/AuthStore";
 
@@ -15,6 +15,14 @@ export interface LoginForm {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { isUserLogged } = AuthStore;
+
+  useEffect(() => {
+    if(isUserLogged) {
+      navigate("/");
+    }
+  }, [isUserLogged]);
+
   const initialValues: LoginForm = {
     username: "",
     password: "",

@@ -13,9 +13,10 @@ import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { themeStyles } from "../../../utils/themeStyles";
 import DataService from "../../../services/DataService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NotificationProps } from "../../../components/Notification/Notification";
 import Notification from "../../../components/Notification/Notification";
+import AuthStore from "../../../mobx/AuthStore";
 
 export interface RegisterForm {
   username: string;
@@ -26,6 +27,14 @@ export interface RegisterForm {
 
 const Register = () => {
   const navigate = useNavigate();
+  const { isUserLogged } = AuthStore;
+
+  useEffect(() => {
+    if(isUserLogged) {
+      navigate("/");
+    }
+  }, [isUserLogged]);
+
   const initialValues: RegisterForm = {
     username: "",
     email: "",
