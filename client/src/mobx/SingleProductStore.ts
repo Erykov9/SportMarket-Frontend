@@ -17,24 +17,25 @@ class SingleProductStore {
   async fetch(id?: string): Promise<void> {
     try {
       this.isError = false;
-      const data = await DataService.getOne("products", id);
+      const data: Product = await DataService.getOne("products", id);
+      console.log(data)
       this.setProduct(data);
     } catch (error) {
       this.isError = true;
     }
   };
 
-  async update(id: string, body: any) {
+  async update(id: string, body: Partial<Product>) {
     const response = await DataService.update("products", id, body);
     return response;
   }
 
-  async create(body: any) {
+  async create(body: Partial<Product>) {
     const response = await DataService.create("products", body);
     return response;
   }
 
-  async uploadImage(body: any) {
+  async uploadImage(body: Partial<FormData>) {
     const response = await DataService.create("images/upload", body);
     return response;
   }

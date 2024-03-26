@@ -40,3 +40,7 @@ interface Image {
   fileUsername: string;
   productId: string;
 }
+
+interface IError {
+  error: string;
+}

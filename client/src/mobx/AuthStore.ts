@@ -1,6 +1,7 @@
 import { action, makeAutoObservable } from "mobx";
 import DataService from "../services/DataService";
 import { LoginForm } from "../pages/Auth/Login/Login";
+import { AxiosResponse } from "axios";
 
 interface IUserData {
   id: string;
@@ -8,6 +9,7 @@ interface IUserData {
   email: string;
   products: Product[]
 }
+
 
 class AuthStore {
   public isUserLogged: boolean = false;
@@ -35,7 +37,7 @@ class AuthStore {
     this.isUserLogged = bool;
   };
 
-  async login(body: LoginForm) {
+  async login(body: LoginForm): Promise<void | IError> {
     try {
       await DataService.login("login", body);
       this.updateIsUserLogged(true);
@@ -46,28 +48,33 @@ class AuthStore {
     }
   };
 
-  async logout() {
+  async logout(): Promise<void> {
     await DataService.logout("logout");
     this.updateIsUserLogged(false);
     this.username = null;
     this.userData = this.userDataInitialState;
   };
 
-  async isLogged() {
+  async isLogged(): Promise<boolean> {
     try {
-      const response = await DataService.isLogged("isLogged");
-      this.username = response.data.username;
-      await this.getUserByUsername(response.data.username);
-      this.updateIsUserLogged(true);
-      return response.data.data;
+      const response: AxiosResponse | void = await DataService.isLogged("isLogged");
+      if(response) {
+        this.username = response.data.username;
+        await this.getUserByUsername(response.data.username);
+        this.updateIsUserLogged(true);
+        return response.data.data;
+      }
+
+      this.isUserLogged = false;
+      return false;
     } catch(error) {
       this.isUserLogged = false;
       return false;
     }
   };
 
-  async getUserByUsername(username: string) {
-    const response = await DataService.getOne("profile", username);
+  async getUserByUsername(username: string): Promise<void> {
+    const response: IUserData = await DataService.getOne("profile", username);
     this.updateUserData(response);
   };
   

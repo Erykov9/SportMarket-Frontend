@@ -11,6 +11,10 @@ export interface IProductQuery {
   pageSize: number;
 }
 
+interface ProductAndPagination extends Pagination {
+  products: Product[];
+}
+
 class ProductsStore {
   public products: Product[] = [];
   public initialQueryState: IProductQuery = {
@@ -40,7 +44,7 @@ class ProductsStore {
     this.queryBuilder(this.query);
   };
 
-  setQuery(query: IProductQuery) {
+  setQuery(query: IProductQuery): void {
     this.query = query;
     this.refetch(this.queryBuilder(this.query));
   };
@@ -50,18 +54,18 @@ class ProductsStore {
     return queryString;
   };
 
-  setProducts(products: Product[]) {
+  setProducts(products: Product[]): void {
     this.products = products;
   };
 
-  setPagination(pagination: Pagination) {
+  setPagination(pagination: Pagination): void {
     this.pagination = pagination;
   };
 
-  async refetch(query?: string) {
+  async refetch(query?: string): Promise<void> {
     try {
       this.isError = false;
-      const data = await DataService.getAll("products", query);
+      const data: ProductAndPagination = await DataService.getAll("products", query);
       this.setProducts(data?.products);
       this.setPagination({
         pageNumber: data.pageNumber,
