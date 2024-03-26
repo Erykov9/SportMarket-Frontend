@@ -10,7 +10,15 @@ interface IProductProps {
 const Product: React.FC<IProductProps> = ({product}) => {
   const navigate = useNavigate();
   const src = product.images.length !== 0 ? product.images[0].filePath : "assets/imageplaceholder.png";
-  const alt = product.images.length !== 0 ? product.images[0].fileName : "placeholder"
+  const alt = product.images.length !== 0 ? product.images[0].fileName : "placeholder";
+
+  const trimDescription = (description: string) => {
+    const dsc = description.slice(0, 250).split("");
+    if(dsc[dsc.length - 1] === " ") {
+      dsc.pop();
+    }
+    return dsc.join("") + "...";
+  };
 
   return (
     <div className={styles.product} onClick={() => navigate(`${product.id}`)}> 
@@ -21,7 +29,7 @@ const Product: React.FC<IProductProps> = ({product}) => {
         <div className={styles.description}>
           <div className={styles.productHeader}>
             <h3>{product.productName}</h3>
-            <p>{product.productDescription}</p>
+            <p>{trimDescription(product.productDescription)}</p>
             <p className={styles.productInfo}>Category: <span>{product.category.categoryName}</span></p>
             <p className={styles.productInfo}>Location: <span>{product.location}</span></p>
             <p className={styles.productInfo}>Added: <span>{moment(product.createdAt).format("YYYY/MM/DD")}</span></p>

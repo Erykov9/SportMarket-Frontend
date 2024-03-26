@@ -18,7 +18,6 @@ class SingleProductStore {
     try {
       this.isError = false;
       const data: Product = await DataService.getOne("products", id);
-      console.log(data)
       this.setProduct(data);
     } catch (error) {
       this.isError = true;

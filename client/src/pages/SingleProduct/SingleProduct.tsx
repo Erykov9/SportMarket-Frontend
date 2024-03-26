@@ -11,7 +11,6 @@ import { Button, Container, Stack } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import NotFound from "../NotFound/NotFound";
-import './SingleProduct.scss';
 
 
 const SingleProduct = observer(() => {
