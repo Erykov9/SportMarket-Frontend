@@ -57,7 +57,6 @@ class DataService {
       };
 
       const response = await axios.post(`${this._baseURL}/auth/${endpoint}`, bodyToRegister);
-      console.log(response)
 
       if(response.status === 400) {
         return response;

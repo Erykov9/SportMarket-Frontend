@@ -1,0 +1,88 @@
+@import 'src/styles/config.scss';
+
+.cart {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding-top: 64px;
+  background-color: $primary;
+  justify-content: flex-start;
+  width: 330px;
+  justify-content: center;
+  box-shadow: 0 0 5px 2px $primary;
+
+  .cartWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .header {
+      h2 {
+        font-weight: 300;
+        text-wrap: nowrap;
+      }
+    }
+
+    .cartProducts {
+      width: 100%;
+
+      .cartProduct {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+          margin: 0;
+        }
+
+        p:nth-child(1) {
+          cursor: pointer;
+
+          &:hover {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .result {
+      padding-top: 15px;
+      display: flex;
+      flex-direction: column;
+
+      span:nth-child(2) {
+        color: $error;
+      }
+    }
+  }
+}
+.cartOpen {
+  animation: cartSlide 0.2s forwards;
+  overflow: hidden;
+}
+.cartClose {
+  animation: cartClose 0.2s forwards;
+  overflow: hidden;
+}
+
+@keyframes cartSlide {
+  0% {
+    width: 0;
+  } 100% {
+    width: 330px;
+  }
+}
+
+@keyframes cartClose {
+  0% {
+    width: 330px;
+  }
+  100% {
+    width: 0;
+  }
+}
+

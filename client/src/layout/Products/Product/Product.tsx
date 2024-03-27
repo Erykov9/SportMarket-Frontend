@@ -17,7 +17,7 @@ const Product: React.FC<IProductProps> = ({product}) => {
     if(dsc[dsc.length - 1] === " ") {
       dsc.pop();
     }
-    return dsc.join("") + "...";
+    return description.length < 250 ? description : dsc.join("") + "...";
   };
 
   return (

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthStore from "../../mobx/AuthStore";
 import { observer } from "mobx-react";
-import Navigation from "../../layout/Header/Navigation/Navigation";
 import styles from "./ProfilePage.module.scss";
 import {
   Button,
@@ -12,6 +11,7 @@ import {
 import ProductCard from "./ProductCard/ProductCard";
 import Popup from "../../components/Popup/Popup";
 import ManageProduct from "../../components/ManageProduct/ManageProduct";
+import Header from "../../layout/Header/Header";
 
 
 const Profile = observer(() => {
@@ -36,7 +36,7 @@ const Profile = observer(() => {
 
   return (
     <>
-      <Navigation isLogged={true} />
+      <Header isLogged={true} />
       <div className={styles.profile}>
         <div className={styles.wrapper}>
           <div className={styles.header}>

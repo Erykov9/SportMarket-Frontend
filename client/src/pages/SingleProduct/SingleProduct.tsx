@@ -4,23 +4,35 @@ import SingleProductStore from "../../mobx/SingleProductStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
-
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Button, Container, Stack } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import NotFound from "../NotFound/NotFound";
+import AuthStore from "../../mobx/AuthStore";
+import CartStore from "../../mobx/CartStore";
 
 
 const SingleProduct = observer(() => {
   const { id } = useParams();
   const { product, isError } = SingleProductStore;
+  const { isUserLogged } = AuthStore;
   const navigate = useNavigate();
 
   useEffect(() => {
     SingleProductStore.fetch(id);
   }, []);
+
+  const cartHandler = () => {
+    const cartProduct: Partial<Product> = {
+      id: product?.id,
+      productName: product?.productName,
+      productPrice: product?.productPrice
+    };
+
+    CartStore.addToCart(cartProduct);
+  };
 
   if(isError) {
     return <div><NotFound/></div>
@@ -47,7 +59,7 @@ const SingleProduct = observer(() => {
             <p><span>{product?.productDescription}</span></p>
             <h3 className={styles.productPrice}>Price: <span>{product?.productPrice}$</span></h3>
             <Stack gap={2} display={'flex'} flexDirection={'row'}>
-              <Button variant="contained">Add to cart</Button>
+              <Button variant="contained" onClick={cartHandler} disabled={!isUserLogged}>Add to cart</Button>
               <Button variant="contained" color="success">Buy now</Button>
             </Stack>
           </div>
