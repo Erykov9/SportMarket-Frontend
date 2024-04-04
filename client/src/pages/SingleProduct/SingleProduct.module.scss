@@ -50,6 +50,10 @@
           color: $error;
         }
       }
+
+      .description {
+        word-wrap: break-word;
+      }
       
 
       .categoryName {

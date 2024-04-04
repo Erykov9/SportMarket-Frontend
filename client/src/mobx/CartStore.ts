@@ -1,7 +1,7 @@
 import { action, makeAutoObservable } from "mobx";
 
 class CartStore {
-  public cartProducts: Partial<Product[]> = [];
+  public cartProducts: Product[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -9,13 +9,13 @@ class CartStore {
   }
 
   @action
-  updateCart(data: Partial<Product>): Partial<Product[]> {
+  updateCart(data: Product): Product[] {
     this.cartProducts.push(data as Product);
     return this.cartProducts;
   }
 
   @action
-  getCart() {
+  getCart(): void {
     const cart = localStorage.getItem("cart");
     if (cart !== null) {
       this.cartProducts = JSON.parse(cart);
@@ -25,7 +25,7 @@ class CartStore {
     return;
   }
 
-  addToCart(data: Partial<Product>) {
+  addToCart(data: Product): void {
     const isDuplicated = this.cartProducts.find(
       (product) => product?.id === data.id
     );
@@ -37,7 +37,7 @@ class CartStore {
     localStorage.setItem("cart", JSON.stringify(cartProducts));
   }
 
-  deleteFromCart(id: string) {
+  deleteFromCart(id: string): void {
     const filteredCartProducts = this.cartProducts.filter(
       (product) => product?.id !== id
     );

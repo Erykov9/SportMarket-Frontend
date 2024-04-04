@@ -12,6 +12,8 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 import NotFound from "../NotFound/NotFound";
 import AuthStore from "../../mobx/AuthStore";
 import CartStore from "../../mobx/CartStore";
+import { v4 as uuidv4 } from "uuid";
+import PurchaseStore from "../../mobx/PurchaseStore";
 
 
 const SingleProduct = observer(() => {
@@ -25,13 +27,13 @@ const SingleProduct = observer(() => {
   }, []);
 
   const cartHandler = () => {
-    const cartProduct: Partial<Product> = {
-      id: product?.id,
-      productName: product?.productName,
-      productPrice: product?.productPrice
-    };
+    CartStore.addToCart(product as Product);
+  };
 
-    CartStore.addToCart(cartProduct);
+  const navigateToBuyNow = () => {
+    PurchaseStore.setProduct([product] as Product[]);
+    const guid = uuidv4();
+    navigate(`/order/${guid}/buynow/`);
   };
 
   if(isError) {
@@ -56,11 +58,11 @@ const SingleProduct = observer(() => {
             <h4><span className={styles.username}>{product?.user.username.toUpperCase()}</span></h4>
             <h2><span>{product?.productName}</span></h2>
             <p className={styles.categoryName}>Category:<span> {product?.category.categoryName}</span></p>
-            <p><span>{product?.productDescription}</span></p>
+            <p><span className={styles.description}>{product?.productDescription}</span></p>
             <h3 className={styles.productPrice}>Price: <span>{product?.productPrice}$</span></h3>
             <Stack gap={2} display={'flex'} flexDirection={'row'}>
               <Button variant="contained" onClick={cartHandler} disabled={!isUserLogged}>Add to cart</Button>
-              <Button variant="contained" color="success">Buy now</Button>
+              <Button variant="contained" color="success" onClick={navigateToBuyNow}>Buy now</Button>
             </Stack>
           </div>
         </div>

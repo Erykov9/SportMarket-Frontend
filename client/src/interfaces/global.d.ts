@@ -44,3 +44,16 @@ interface Image {
 interface IError {
   error: string;
 }
+
+interface Purchase {
+  id: string;
+  products: string;
+  isPaid: boolean;
+  totalPrice: number;
+  city: string;
+  street: string;
+  country: string;
+  streetNumber: string;
+  userId: string;
+  user: User
+}

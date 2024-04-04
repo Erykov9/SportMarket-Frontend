@@ -3,6 +3,10 @@ import styles from "./Cart.module.scss";
 import { createPortal } from "react-dom";
 import CartProduct from "./CartProduct/CartProduct";
 import { Button } from "@mui/material";
+import PurchaseStore from "../../mobx/PurchaseStore";
+import { useNavigate } from "react-router-dom";
+import { toJS } from "mobx";
+import { v4 as uuidv4 } from 'uuid'
 
 interface ICartProps {
   isOpen: boolean;
@@ -15,6 +19,7 @@ const Cart: React.FC<ICartProps> = ({ isOpen, cartProducts, handleClose }) => {
   const [animationClass, setAnimationClass] = useState("");
   const [price, setPrice] = useState<number>(0);
   const modalRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   
   const getOutterModalClick = (e: MouseEvent) => {
     if(isOpen) {
@@ -22,6 +27,13 @@ const Cart: React.FC<ICartProps> = ({ isOpen, cartProducts, handleClose }) => {
         handleClose();
       }
     }
+  };
+
+  const buyHandler = () => {
+    const guid = uuidv4();
+    PurchaseStore.setProduct(cartProducts as Product[]);
+    navigate(`/order/${guid}/buynow`);
+    
   };
   
   useEffect(() => {
@@ -82,7 +94,7 @@ const Cart: React.FC<ICartProps> = ({ isOpen, cartProducts, handleClose }) => {
                   <div><span>Result: </span>
                   <span>{price}</span>$</div>
                   
-                  <Button variant="contained" color="secondary">
+                  <Button variant="contained" color="secondary" onClick={buyHandler}>
                     Buy
                   </Button>
                 </div>

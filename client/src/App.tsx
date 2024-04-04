@@ -12,6 +12,7 @@ import Login from "./pages/Auth/Login/Login";
 import AuthStore from "./mobx/AuthStore";
 import { observer } from "mobx-react";
 import Profile from "./pages/ProfilePage/Profile";
+import Order from "./pages/Order/Order";
 
 const App = observer(() => {
   const { isUserLogged: isLogged } = AuthStore;
@@ -33,6 +34,7 @@ const App = observer(() => {
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/order/:id/buynow/" element={<Order/>} />
       </Routes>
       <Divider>SportMarket 2024 &copy; <a href="https://linkedin.com/in/eryk-szczepanek" target="_blank" rel="noreferrer" style={{color: themeStyles.secondary}}>Erykov9</a></Divider>
       <Footer/>
