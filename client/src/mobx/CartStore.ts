@@ -25,6 +25,11 @@ class CartStore {
     return;
   }
 
+  @action
+  removeAllCart(): void {
+    this.cartProducts = [];
+  }
+
   addToCart(data: Product): void {
     const isDuplicated = this.cartProducts.find(
       (product) => product?.id === data.id

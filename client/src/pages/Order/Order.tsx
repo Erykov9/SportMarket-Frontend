@@ -11,11 +11,18 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import PurchaseData from "./PurchaseData/PurchaseData";
+import DeliveryForm from "./DeliveryForm/DeliveryForm";
+import { observer } from "mobx-react";
+import PurchaseStore from "../../mobx/PurchaseStore";
+import FinishOrder from "./FinishOrder/FinishOrder";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Checkout", "Delivery details", "Finish"];
 
-const Order = () => {
+const Order = observer(() => {
   const [activeStep, setActiveStep] = useState<number>(0);
+  const { deliveryAddress, products } = PurchaseStore;
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -27,6 +34,32 @@ const Order = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleFinish = () => {
+    const totalPrice = products.reduce((acc, curr) => {
+      return acc + curr!.newPrice;
+    }, 0);
+
+    const purchaseProductsData: ProductToSend[] = products.map(product => {
+      const data: ProductToSend = {
+        productId: product.id,
+        productName: product.productName,
+        price: product.newPrice,
+        amount: product.amount
+      };
+
+      return data;
+    });
+
+    const purchaseData = {
+      ...deliveryAddress,
+      totalPrice,
+      products: purchaseProductsData
+    };
+
+    PurchaseStore.purchase(purchaseData as PurchaseToSend);
+    navigate("/");
   };
 
   return (
@@ -72,7 +105,7 @@ const Order = () => {
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
+                <Button onClick={activeStep === steps.length - 1 ? handleFinish : handleNext} disabled={activeStep === 1 && !deliveryAddress?.isSubmitted}>
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
@@ -85,9 +118,22 @@ const Order = () => {
             <PurchaseData />
           </>
         )}
+        {activeStep === 1 && (
+          <>
+            <Divider>Your delivery address</Divider>
+            <DeliveryForm />
+          </>
+        )}
+        {activeStep === 2 && (
+          <>
+            <FinishOrder/>
+          </>
+        )
+
+        }
       </div>
     </Container>
   );
-};
+});
 
 export default Order;

@@ -47,7 +47,7 @@ interface IError {
 
 interface Purchase {
   id: string;
-  products: string;
+  products: Partial<Product[]>;
   isPaid: boolean;
   totalPrice: number;
   city: string;
@@ -56,4 +56,20 @@ interface Purchase {
   streetNumber: string;
   userId: string;
   user: User
+}
+
+interface ProductToSend {
+  productId: string;
+  price: number;
+  productName: string;
+  amount: number;
+}
+
+interface PurchaseToSend {
+  city: string;
+  country: string;
+  street: string;
+  streetNumber: string;
+  totalPrice: number;
+  products: ProductsToSend[]
 }

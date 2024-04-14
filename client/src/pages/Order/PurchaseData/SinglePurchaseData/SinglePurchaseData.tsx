@@ -12,7 +12,6 @@ const SinglePurchaseData: React.FC<ISingleProductPurchaseDataProps> = observer((
   const [amount, setAmount] = useState<number>(product.amount);
   const basePrice = product.productPrice;
 
-  console.log(basePrice)
   const up = () => {
     if (amount < 99) {
       setAmount(amount + 1);

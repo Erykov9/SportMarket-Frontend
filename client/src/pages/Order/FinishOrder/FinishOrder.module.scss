@@ -1,0 +1,18 @@
+@import "src/styles/config.scss";
+
+.finishOrder {
+  .info {
+    color: $error;
+  }
+
+  p {
+    margin: 2px;
+  }
+
+  .productsInfo,
+  .addressInfo,
+  .summary {
+    padding: 25px 0;
+
+  }
+}

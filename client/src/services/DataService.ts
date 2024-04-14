@@ -81,7 +81,7 @@ class DataService {
       const response: AxiosResponse = await axios.get(`${this._baseURL}/auth/${endpoint}`, {withCredentials: true});
       return response;
     } catch (error) {
-      throw new Error("Server Error");
+      throw new Error("Server Error" + error);
     }
   }
 
@@ -89,7 +89,15 @@ class DataService {
     try {
       await axios.post(`${this._baseURL}/auth/${endpoint}`, {}, {withCredentials: true});
     } catch (error) {
-      throw new Error("Server Error");
+      throw new Error("Server Error" + error);
+    }
+  }
+
+  async purchase(endpoint: string, body: PurchaseToSend): Promise<void> {
+    try {
+      await axios.post(`${this._baseURL}/${endpoint}`, body, {withCredentials: true});
+    } catch(error) {
+      throw new Error("Server Error" + error)
     }
   }
 };

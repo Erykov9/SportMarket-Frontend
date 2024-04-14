@@ -74,7 +74,6 @@ const Register = () => {
     const response = await DataService.register('register', rest);
 
     if(response.status === 400) {
-      console.log('elo')
       return setNotificationInfo({
         type: 'error',
         message: 'Register failed.'

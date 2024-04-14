@@ -1,0 +1,14 @@
+@import 'src/styles/config.scss';
+
+.deliveryForm {
+  margin: 15px 0;
+  .error {
+    color: $error;
+    font-size: 12px;
+    margin: 0;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+}
